@@ -70,6 +70,7 @@ class PesananController extends Controller
             $barang = Pesanan::find($key);
             // echo $barang->nama_barang;
             $barang->status = $value;
+            $barang->date = $request->date;
             $barang->save();
         }
         $request->session()->flash('buatpesanan', 'Pesanan Berhasil Dibuat, Sillahkan Melakukan Pembayaran');

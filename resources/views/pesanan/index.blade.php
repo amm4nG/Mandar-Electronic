@@ -86,7 +86,6 @@
                             @empty
                                 <tr>
                                     <td class="text-center" colspan="6">Tidak Ada Pesanan</td>
-
                                 </tr>
                             @endforelse
                             <tr>
@@ -105,7 +104,7 @@
                                         @endphp
                                     </h6>
                                 </td>
-                                <td colspan=""></td>
+                                <td></td>
                                 <td class="align-middle text-center">
                                     @if ($barang->count() > 0 && $item->status == 0)
                                         <form action="{{ route('pesanan.update', $item->id) }}" method="post">
@@ -114,6 +113,11 @@
                                             @foreach ($barang as $item)
                                                 <input type="hidden" name="kode[{{ $item->id }}]" value="1">
                                             @endforeach
+                                            @php
+                                                $date = date('d/m/Y');
+                                            @endphp
+                                            <input type="hidden" name="date" value="{{ $date }}"
+                                                id="">
                                             <button style="width: 10rem" type="submit"
                                                 class="btn btn-success btn-sm mt-3">Buat
                                                 Pesanan</button>

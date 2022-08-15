@@ -35,6 +35,14 @@
                                             {{ $pembayaran->alamat }}
                                         </td>
                                     </tr>
+                                    @foreach ($pesanan as $item)
+                                    @endforeach
+                                    <tr>
+                                        <td class="align-middle">Tanggal Pemesanan</td>
+                                        <td class="text-right">
+                                            {{ $item->date }}
+                                        </td>
+                                    </tr>
                                     <tr>
                                         <td class="align-middle font-weight-bold">
                                             Total pembayaran
@@ -43,10 +51,8 @@
                                             {{ number_format($pembayaran->total_harga) }}
                                         </td>
                                     </tr>
-
                                 </table>
                             </div>
-
                         </div>
                     </div>
                     {{-- <center> --}}

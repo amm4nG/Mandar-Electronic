@@ -26,7 +26,6 @@ class CekUserLogin
         if ($user->level == $level) {
             return $next($request);
         }
-        return redirect('login')->with('error', "Kamu tidak ada akses");
-        // return $next($request);
+        abort(404);
     }
 }

@@ -107,6 +107,9 @@
                                 </div>
                             @endif
                         @endif
+                    @else
+                        <h6 class="">Tidak Ada Pesanan, Klik <a href="{{ url('produk') }}">Disini</a> Untuk Belanja
+                        </h6>
                     @endif
                 </div>
             </div>

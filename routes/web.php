@@ -13,6 +13,7 @@ use App\Http\Controllers\PesananController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\UsersController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,14 +33,14 @@ use Illuminate\Support\Facades\Route;
 // Route::get('halaman', function () {
 //     PembayaranEvent::dispatch("connected");
 // });
-
+Route::resource('profil', ProfilController::class)->middleware('auth');
 Route::post('/', [LoginController::class, 'authenticate']);
 Route::get('login', [LoginController::class, 'index'])->name('login')->middleware('guest');
 Route::get('logout', [LoginController::class, 'logout'])->middleware('auth');
-Route::resource('profil', ProfilController::class)->middleware('auth');
 Route::get('/', [LayoutController::class, 'home'])->middleware('auth');
 Route::get('/produk', [LayoutController::class, 'index'])->middleware('auth');
 Route::resource('pesanan', PesananController::class)->middleware('auth');
+
 // Route::group(['middleware' => ['auth']], function () {
 Route::group(['middleware' => ['cekUserLogin:admin']], function () {
     Route::resource('barang', BarangController::class);
@@ -55,3 +56,4 @@ Route::group(['middleware' => ['cekUserLogin:user']], function () {
     Route::resource('pembayaran', PembayaranController::class);
 });
 // });
+Auth::routes();

@@ -71,15 +71,14 @@
                                         <td class="align-middle text-center">{{ $item['total'] }}</td>
                                         <td class="align-middle text-center">
                                             {{-- <a class="btn btn-sm btn-danger" href=""><i class="fas fa-trash"></i></a> --}}
-                                            <form action="{{ route('barang.destroy', $item['id']) }}" method="post">
-                                                <a class="btn btn-sm btn-warning mb-1"
-                                                    href="{{ route('barang.edit', $item['id']) }}"><i
-                                                        class="fas fa-pen"></i></a>
-                                                @csrf
-                                                @method('delete')
-                                                <button class="btn btn-sm btn-danger mb-1" type="submit"><i
-                                                        class="fas fa-trash"></i></button>
-                                            </form>
+
+                                            <a class="btn btn-sm btn-warning mb-1"
+                                                href="{{ route('barang.edit', $item['id']) }}"><i
+                                                    class="fas fa-pen"></i></a>
+                                            <a class="btn btn-danger btn-sm mb-1" type="submit" data-toggle="modal"
+                                                data-target="#exampleModal-{{ $item['id'] }}" href=""><i
+                                                    class="fas fa-trash"></i></a>
+
                                         </td>
                                     </tr>
                                 @empty
@@ -157,7 +156,7 @@
                                             </p>
                                             {{-- <p class="card-text"></p> --}}
                                             <a href="#" class="btn btn-info form-control" data-toggle="modal"
-                                                data-target="#exampleModal-{{ $item['id'] }}">Add Cart</a>
+                                                data-target="#addCart-{{ $item['id'] }}">Add Cart</a>
                                         </div>
                                     </div>
                                 </div>
@@ -168,16 +167,12 @@
 
             </section>
         @endif
-        <!-- Main content -->
-
-        <!-- /.content -->
     </div>
-    <!-- /.content-wrapper -->
 
     @foreach ($barang as $item)
         <!-- Modal -->
-        <div class="modal fade" id="exampleModal-{{ $item->id }}" tabindex="-1"
-            aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="addCart-{{ $item->id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form action="{{ route('pesanan.store') }}" method="post" class="">
@@ -232,6 +227,34 @@
             </div>
         </div>
     @endforeach
+
+    @foreach ($terjual as $item)
+        <div class="modal fade" id="exampleModal-{{ $item['id'] }}" tabindex="-1"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Konfirmasi Delete</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action="{{ route('barang.destroy', $item['id']) }}" method="post">
+                        {{-- <div class="modal-body"> --}}
+                        @csrf
+                        @method('delete')
+                        {{-- </div> --}}
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endforeach
+    <!-- Modal -->
+
 
 
     <footer class="main-footer">

@@ -30,7 +30,7 @@
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-border table-sm">
-                            <tr align="center">
+                            <tr>
                                 <th class="align-middle text-center">No</th>
                                 <th class="align-middle text-center">Email</th>
                                 <th class="align-middle text-center" colspan="2">Transaksi</th>
@@ -48,44 +48,18 @@
                                     </td>
                                     <td></td>
                                     {{-- <td></td> --}}
-                                    <td class="align-middle text-center">
-                                        @if ($item->status == 0)
-                                            <p class="text-success">Proses</p>
-                                        @else
-                                            <p class="text-success">Sukses</p>
-                                        @endif
-                                        {{-- </td>
-                                    <td class="align-middle text-center"> --}}
-                                        {{-- <a class="btn btn-sm btn-danger" href=""><i class="fas fa-trash"></i></a> --}}
-                                        {{-- <form action="" method="post">
-                                            <a class="btn btn-sm btn-info"
-                                                href="{{ route('detail.edit', $item->email) }}"><i class="fas fa-info"
-                                                    style="width: 1rem"></i></a>
-                                            @csrf
-                                            @method('delete') --}}
-                                        {{-- <button class="btn btn-sm btn-danger disabled mb-1" type="submit"><i
-                                                    class="fas fa-trash" style="width: 1rem"></i></button> --}}
-                                        {{-- </form>
-                                    </td> --}}
+                                    <td class="align-middle text-center text-success">
+                                        Sukses
+                                    </td>
                                 </tr>
                             @empty
                             @endforelse
-
                         </table>
                         {{ $transaksi->onEachSide(0)->links() }}
                     </div>
                 </div>
             </div>
-            {{-- <!-- /.card-body -->
-                <div class="card-footer">
-                    Footer
-                </div>
-                <!-- /.card-footer--> --}}
-            <!-- /.card -->
         </section>
-        <!-- Main content -->
-
-        <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
     <footer class="main-footer">
