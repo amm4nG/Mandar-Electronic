@@ -9,8 +9,8 @@
         @if (Auth::user()->level == 'admin')
             {{-- Halaman Admin --}}
             <section class="content-header">
-                <h1 class="alert alert-info">Produk</h1>
-                <div class="row mb-2">
+                <h5 class="alert alert-info">Produk</h5>
+                <div class="row">
                     <div class="col-sm-6">
                     </div>
                 </div>
@@ -99,6 +99,7 @@
                 </div>
             </section>
             <section class="content">
+
                 @if (session('keranjang'))
                     <div class="alert alert-warning alert-dismissible fade show" role="alert">
                         {{ session('keranjang') }}
@@ -123,6 +124,13 @@
                 @elseif (session('sudahAda'))
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                         {{ session('sudahAda') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @elseif (session('stockkurang'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ session('stockkurang') }}
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -242,6 +250,24 @@
     </div>
     <!-- ./wrapper -->
 @endsection
-@section('script')
-    <script></script>
+@section('scripts')
+    @vite(['resources/js/app.js'])
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+    <script>
+        Pusher.logToConsole = true;
+        var pusher = new Pusher('8b0a80f08ae3d6fa166d', {
+            cluster: 'ap1'
+        });
+        var channel = pusher.subscribe('channel-pembayaran');
+        channel.bind('channel-pembayaran', function(data) {
+            // alert(JSON.stringify(data));
+            $.ajax({
+                url: "penjualan",
+                success: function(result) {
+                    $("#result").html(result);
+                }
+            });
+        });
+    </script>
 @endsection

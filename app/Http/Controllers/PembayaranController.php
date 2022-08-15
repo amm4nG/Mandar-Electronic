@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PembayaranEvent;
 use App\Models\Pembayaran;
 use App\Models\Pengiriman;
 use App\Models\Pesanan;
@@ -46,6 +47,7 @@ class PembayaranController extends Controller
         // dd($pembayaran);
         $pembayaran->save();
         $request->session()->flash('pembayaran', 'Upload berhasil');
+        PembayaranEvent::dispatch('Upload berhasil');
         return redirect('pembayaran');
     }
 }

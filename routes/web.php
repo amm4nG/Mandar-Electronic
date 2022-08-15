@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\PembayaranEvent;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\BarangKeluarController;
 use App\Http\Controllers\BarangMasukController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\PesananController;
+use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
@@ -27,11 +29,14 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
+// Route::get('halaman', function () {
+//     PembayaranEvent::dispatch("connected");
+// });
 
 Route::post('/', [LoginController::class, 'authenticate']);
 Route::get('login', [LoginController::class, 'index'])->name('login')->middleware('guest');
 Route::get('logout', [LoginController::class, 'logout'])->middleware('auth');
-
+Route::resource('profil', ProfilController::class)->middleware('auth');
 Route::get('/', [LayoutController::class, 'home'])->middleware('auth');
 Route::get('/produk', [LayoutController::class, 'index'])->middleware('auth');
 Route::resource('pesanan', PesananController::class)->middleware('auth');

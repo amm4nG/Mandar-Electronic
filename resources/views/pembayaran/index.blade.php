@@ -21,15 +21,6 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-            @elseif (session('pembayaran'))
-                <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    <strong>{{ session('pembayaran') }}</strong> Bukti pembayaran akan dikonfirmasi 5 menit setelah
-                    diupload, Silahkan akses halaman ini atau di laman <strong>Pesanan</strong> untuk cek status pesanan
-                    Anda
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
             @endif
             <!-- Default box -->
             <div class="card">
@@ -103,23 +94,23 @@
                                         <button type="submit" class="btn btn-danger">Pesanan Diterima</button>
                                     </form>
                                 </div>
+                            @else
+                                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                    <strong>Upload berhasil</strong>, Bukti pembayaran akan dikonfirmasi 5 menit
+                                    setelah
+                                    diupload, Silahkan akses halaman ini atau di laman <strong>Pesanan</strong> untuk cek
+                                    status pesanan
+                                    Anda
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
                             @endif
                         @endif
                     @endif
                 </div>
-
-                {{-- <!-- /.card-body -->
-                <div class="card-footer">
-                    Footer
-                </div>
-                <!-- /.card-footer--> --}}
             </div>
-            <!-- /.card -->
-
         </section>
-        <!-- Main content -->
-
-        <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
     <footer class="main-footer">
@@ -129,4 +120,25 @@
         <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights
         reserved.
     </footer>
+@endsection
+@section('scripts')
+    @vite(['resources/js/app.js'])
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+    <script>
+        Pusher.logToConsole = true;
+        var pusher = new Pusher('8b0a80f08ae3d6fa166d', {
+            cluster: 'ap1'
+        });
+        var channel = pusher.subscribe('channel-pembayaran');
+        channel.bind('channel-pembayaran', function(data) {
+            // alert(JSON.stringify(data));
+            $.ajax({
+                url: "pembayaran",
+                success: function(result) {
+                    $("#result").html(result);
+                }
+            });
+        });
+    </script>
 @endsection

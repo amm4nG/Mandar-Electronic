@@ -50,9 +50,9 @@
                                     {{-- <td></td> --}}
                                     <td class="align-middle text-center">
                                         @if ($item->status == 0)
-                                            Proses
+                                            <p class="text-success">Proses</p>
                                         @else
-                                            Success
+                                            <p class="text-success">Sukses</p>
                                         @endif
                                         {{-- </td>
                                     <td class="align-middle text-center"> --}}
@@ -72,6 +72,7 @@
                             @endforelse
 
                         </table>
+                        {{ $transaksi->onEachSide(0)->links() }}
                     </div>
                 </div>
             </div>

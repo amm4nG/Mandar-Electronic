@@ -31,6 +31,7 @@
                             @endif
                         @endforeach
                     </table>
+                    {{ $user->onEachSide(5)->links() }}
                 </div>
             </div>
         </section>

@@ -170,3 +170,24 @@
         reserved.
     </footer>
 @endsection
+@section('scripts')
+    @vite(['resources/js/app.js'])
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+    <script>
+        Pusher.logToConsole = true;
+        var pusher = new Pusher('8b0a80f08ae3d6fa166d', {
+            cluster: 'ap1'
+        });
+        var channel = pusher.subscribe('channel-pembayaran');
+        channel.bind('channel-pembayaran', function(data) {
+            // alert(JSON.stringify(data));
+            $.ajax({
+                url: "pesanan",
+                success: function(result) {
+                    $("#result").html(result);
+                }
+            });
+        });
+    </script>
+@endsection

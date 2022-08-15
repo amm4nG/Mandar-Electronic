@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PembayaranEvent;
 use App\Models\BarangKeluar;
 use App\Models\Pembayaran;
 use App\Models\Pengiriman;
@@ -57,6 +58,7 @@ class DetailController extends Controller
         $pembayaran = Pembayaran::where('email', $request->email)->first();
         $pembayaran->update($request->except('_token', '_method', 'telp_kurir'));
         $request->session()->flash('update', "$request->email");
+        PembayaranEvent::dispatch('update status pembayaran');
         return redirect('penjualan');
         dd($pembayaran);
     }

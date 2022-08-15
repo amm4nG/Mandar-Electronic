@@ -1,11 +1,10 @@
 @extends('layout.master')
-{{-- @include('layout.sidebar') --}}
 @section('content')
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h5 class="alert alert-info">Pembayaran</h5>
+            <h5 class="alert alert-info">Pemesanan</h5>
             <div class="row">
                 <div class="col-sm-6">
                 </div>
@@ -23,10 +22,6 @@
                 </div>
             @endif
             <div class="card">
-
-                <div class="card-header">
-                    {{-- <h6>Daftar Pembayaran</h6> --}}
-                </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-border table-sm">
@@ -38,6 +33,7 @@
                                 <th>Status</th>
                                 <th>Detail</th>
                             </tr>
+                            {{-- <tbody id="result"> --}}
                             @forelse ($penjualan as $item)
                                 <tr>
                                     <td class="align-middle text-center">{{ $loop->iteration }}</td>
@@ -45,7 +41,6 @@
                                     <td class="align-middle text-center" colspan="2">Rp.
                                         {{ number_format($item->total_harga) }}</td>
                                     <td></td>
-                                    </td>
                                     <td class="align-middle text-center">
                                         @if ($item->status == 0)
                                             Menunggu Konfirmasi
@@ -69,24 +64,22 @@
                                     </td>
                                 </tr>
                             @empty
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td colspan="2" class="align-middle text-center">Kosong</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                {{-- </tbody> --}}
                             @endforelse
-
                         </table>
                     </div>
                 </div>
             </div>
-            {{-- <!-- /.card-body -->
-                <div class="card-footer">
-                    Footer
-                </div>
-                <!-- /.card-footer--> --}}
-            <!-- /.card -->
         </section>
-        <!-- Main content -->
-
-        <!-- /.content -->
     </div>
-    <!-- /.content-wrapper -->
     <footer class="main-footer">
         <div class="float-right d-none d-sm-block">
             <b>Version</b> 3.2.0
@@ -103,6 +96,24 @@
     </div>
     <!-- ./wrapper -->
 @endsection
-@section('script')
-    <script></script>
+@section('scripts')
+    @vite(['resources/js/app.js'])
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+    <script>
+        Pusher.logToConsole = true;
+        var pusher = new Pusher('8b0a80f08ae3d6fa166d', {
+            cluster: 'ap1'
+        });
+        var channel = pusher.subscribe('channel-pembayaran');
+        channel.bind('channel-pembayaran', function(data) {
+            // alert(JSON.stringify(data));
+            $.ajax({
+                url: "penjualan",
+                success: function(result) {
+                    $("#result").html(result);
+                }
+            });
+        });
+    </script>
 @endsection

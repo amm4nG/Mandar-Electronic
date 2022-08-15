@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PembayaranEvent;
+use App\Models\Barang;
 use App\Models\Pembayaran;
 use App\Models\Pengiriman;
 use App\Models\Pesanan;
@@ -29,7 +31,11 @@ class PesananController extends Controller
             $request->validate([
                 'jumlah_pesanan' => 'required'
             ]);
-            // dd($request->all());
+            $stock = Barang::where('kode', $request->kode)->first();
+            if ($stock->jumlah_barang < $request->jumlah_pesanan) {
+                $request->session()->flash('stockkurang', 'Pastikan jumlah pesanan yang anda inputkan tidak melebihi stock yang ada!');
+                return redirect('produk');
+            }
             Pesanan::create($request->except('_token'));
             $request->session()->flash('keranjang', 'Barang Berhasil Dimasukkan Kedalam Keranjang');
             return redirect('produk');
@@ -45,6 +51,11 @@ class PesananController extends Controller
                     $request->session()->flash('sudahAda', 'Barang Sudah Dimasukkan Kedalam Keranjang');
                     return redirect('produk');
                 }
+            }
+            $stock = Barang::where('kode', $request->kode)->first();
+            if ($stock->jumlah_barang < $request->jumlah_pesanan) {
+                $request->session()->flash('stockkurang', 'Pastikan jumlah pesanan yang anda inputkan tidak melebihi stock yang ada!');
+                return redirect('produk');
             }
             // dd($request->all());
             Pesanan::create($request->except('_token'));

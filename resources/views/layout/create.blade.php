@@ -9,7 +9,7 @@
                         @csrf
                         <div class="card p-3 mt-2">
                             <div class="card-header">
-                                <h5 class="text-center alert alert-info">Tambah Barang</h5>
+                                <h6 class="text-center alert alert-danger">Form Tambah Barang</h6>
                             </div>
                             <label class="mt-2" for="">Kode Barang <span class="text-danger">*</span></label>
                             <input autofocus type="text" value="{{ old('kode') }}" name="kode"
