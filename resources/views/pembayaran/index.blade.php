@@ -84,8 +84,9 @@
                                 </div>
                             @elseif($pembayaran->status == 2)
                                 <div class="alert alert-info mt-2">
-                                    <h6 class="font-weight-bold mt-2">Pesanan anda telah dikirim
+                                    <h6 class="font-weight-bold mt-2 mb-2">Pesanan anda telah dikirim
                                     </h6>
+                                    Tanggal Pengiriman : {{ $pengiriman->date }}
                                     <p>Telp Kurir : {{ $pengiriman->telp_kurir }}</p>
                                     <p class="font-italic">Harap konfirmasi setelah pesanan diterima</p>
                                     <form action="{{ route('pesanan.destroy', $pembayaran->email) }}" method="post">

@@ -52,11 +52,12 @@ class DetailController extends Controller
             $pengiriman->email_pembeli = $request->email;
             $pengiriman->telp_kurir = $request->telp_kurir;
             $pengiriman->alamat = $request->alamat;
+            $pengiriman->date = $request->tanggal;
             $pengiriman->save();
         }
 
         $pembayaran = Pembayaran::where('email', $request->email)->first();
-        $pembayaran->update($request->except('_token', '_method', 'telp_kurir'));
+        $pembayaran->update($request->except('_token', '_method', 'telp_kurir', 'tanggal'));
         $request->session()->flash('update', "$request->email");
         PembayaranEvent::dispatch('update status pembayaran');
         return redirect('penjualan');

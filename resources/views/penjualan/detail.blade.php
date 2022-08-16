@@ -79,6 +79,7 @@
                                     <form action="{{ route('detail.update', $pembayaran->email) }}" method="post">
                                         @csrf
                                         @method('put')
+                                        <input type="hidden" name="tanggal" value="{{ date('d/m/Y') }}">
                                         <label for="" class="text-left">Telp. Kurir</label>
                                         <input type="hidden" name="alamat" value="{{ $pembayaran->alamat }}">
                                         <input autofocus type="text" name="telp_kurir"
